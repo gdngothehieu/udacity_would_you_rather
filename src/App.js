@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import NewQuestion from "./pages/NewQuestion";
 import Leaderboard from "./pages/Leaderboard";
 import Home from "./pages/Home";
+import Question from "./components/Question";
 
 const App = ({ ...props }) => {
   useEffect(() => {
@@ -55,17 +56,18 @@ const App = ({ ...props }) => {
             Login
           </Link>
         ) : (
-          <div
-            style={{
-              cursor: "pointer",
-            }}
-            onClick={() => {
-              console.log(props);
-              props.setAuthenticatedUser();
-            }}
-          >
-            Log out
-          </div>
+          <>
+            <div
+              style={{
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                props.setAuthenticatedUser();
+              }}
+            >
+              Log out
+            </div>
+          </>
         )}
       </div>
 
@@ -75,6 +77,7 @@ const App = ({ ...props }) => {
         <Route path="/login" element={<SignIn />}></Route>
         <Route path="/leaderboard" element={<Leaderboard />}></Route>
         <Route path="/add" element={<NewQuestion />}></Route>
+        <Route path="/question/:qid" element={<Question />} />
       </Routes>
     </BrowserRouter>
   );

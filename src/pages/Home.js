@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Question from "../components/Question";
+import { _getQuestions, _getUsers, _saveQuestionAnswer } from "../_DATA";
 
 const Home = ({ ...props }) => {
   const [questionList, setQuestionList] = useState([]);
@@ -10,11 +12,17 @@ const Home = ({ ...props }) => {
     if (!props.authenticatedUser?.id) {
       navigate("/login");
     } else {
-      let updateQuestionList = [];
-      for (let key in props.questions) {
-        updateQuestionList.push(props.questions[key]);
-      }
-      setQuestionList(updateQuestionList);
+      const getQuestions = async () => {
+        let updateQuestionList = [];
+
+        const questions = await _getQuestions();
+
+        for (let key in questions) {
+          updateQuestionList.push(questions[key]);
+        }
+        setQuestionList(updateQuestionList);
+      };
+      getQuestions();
     }
   }, []);
 
@@ -23,28 +31,17 @@ const Home = ({ ...props }) => {
       {" "}
       {questionList.length
         ? questionList.map((questionList, key) => {
-            console.log(props.authenticatedUser, questionList);
-            if (questionList.author !== props.authenticatedUser.id) {
-              return (
-                <div key={key}>
-                  <div style={{ marginTop: "12px", fontWeight: "bold" }}>
-                    Would you rather? (hover and click to choose)
-                  </div>
-                  <div>
-                    <em style={{ color: "red", cursor: "pointer" }}>
-                      {questionList?.optionOne?.text}
-                    </em>{" "}
-                    or{" "}
-                    <em
-                      style={{ color: "purple", cursor: "pointer" }}
-                      onClick={() => {}}
-                    >
-                      {questionList?.optionTwo?.text}
-                    </em>
-                  </div>
+            return (
+              <div key={key}>
+                <div style={{ marginTop: "12px", fontWeight: "bold" }}>
+                  Would you rather? (hover and click to choose)
                 </div>
-              );
-            }
+                <Question
+                  authenticatedUser={props.authenticatedUser}
+                  questionList={questionList}
+                ></Question>
+              </div>
+            );
           })
         : null}{" "}
     </>

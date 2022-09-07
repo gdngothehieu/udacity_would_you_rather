@@ -15,7 +15,7 @@ const SignIn = ({ ...props }) => {
       usersList.push(props.users[key]);
     }
     const updateUserList = usersList.map((data) => {
-      return { value: data.id, label: data.name };
+      return { value: data.id, label: data.name, ...data };
     });
     setOptions(updateUserList);
   }, [props.users]);
