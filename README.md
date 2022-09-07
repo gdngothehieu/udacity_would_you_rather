@@ -1,6 +1,9 @@
-# Getting Started with Create React App
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a716b2bd-1082-43d9-bd17-cd3684d2d7ad/deploy-status)](https://app.netlify.com/sites/reactnd-would-you-rather/deploys)
+[![Edit reactnd-project-would-you-rather](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/james-priest/reactnd-project-would-you-rather/tree/master/?fontsize=14)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Would You Rather
+
+Would You Rather is a fully responsive and mobile-ready polling game that presents the user with a series of questions.
 
 ## Available Scripts
 
