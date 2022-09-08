@@ -10,38 +10,16 @@ const Question = ({ questionList, ...props }) => {
   const [optionTwoCount, setOptionTwoCount] = useState(null);
 
   const voteAnswer = async (voteAnswer) => {
-    const data = await _saveQuestionAnswer({
-      authedUser: props.authenticatedUser.id,
-      qid: questionList.id,
-      answer: voteAnswer,
-    });
-    const usersData = await _getUsers();
-    const questionData = await _getQuestions();
-    setOptionOneCount(questionData[questionList.id]?.optionOne?.votes?.length);
-    setOptionTwoCount(questionData[questionList.id]?.optionTwo?.votes?.length);
-    // navigate(
-    //   `questions/${questionList.id}?optionOneCount=${
-    //     questionData[questionList.id]?.optionOne?.votes?.length
-    //   }&optionTwoCount=${
-    //     questionData[questionList.id]?.optionTwo?.votes?.length
-    //   }`
-    // );
-    setPoll(true);
+    navigate(`question/${questionList.id}`);
   };
   return (
     <>
-      <div>
-        <em
-          style={{ color: "red", cursor: "pointer" }}
-          onClick={() => voteAnswer("optionOne")}
-        >
+      <div onClick={() => voteAnswer("optionOne")}>
+        <em style={{ color: "red", cursor: "pointer" }}>
           {questionList?.optionOne?.text}
         </em>{" "}
         or{" "}
-        <em
-          style={{ color: "purple", cursor: "pointer" }}
-          onClick={() => voteAnswer("optionTwo")}
-        >
+        <em style={{ color: "purple", cursor: "pointer" }}>
           {questionList?.optionTwo?.text}
         </em>
       </div>

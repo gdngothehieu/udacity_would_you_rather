@@ -1,13 +1,5 @@
-import logo from "./logo.svg";
 import "./App.css";
-import {
-  Routes,
-  Route,
-  Router,
-  Link,
-  BrowserRouter,
-  Redirect,
-} from "react-router-dom";
+import { Routes, Route, Link, BrowserRouter } from "react-router-dom";
 import SignIn from "./pages/SignIn";
 import { connect } from "react-redux";
 import { getUsers, setAuthenticatedUser } from "./store/actions";
@@ -16,7 +8,8 @@ import { useEffect } from "react";
 import NewQuestion from "./pages/NewQuestion";
 import Leaderboard from "./pages/Leaderboard";
 import Home from "./pages/Home";
-import Question from "./components/Question";
+import NotFound404 from "./pages/NotFound404";
+import Poll from "./pages/Poll";
 
 const App = ({ ...props }) => {
   useEffect(() => {
@@ -77,7 +70,8 @@ const App = ({ ...props }) => {
         <Route path="/login" element={<SignIn />}></Route>
         <Route path="/leaderboard" element={<Leaderboard />}></Route>
         <Route path="/add" element={<NewQuestion />}></Route>
-        <Route path="/question/:qid" element={<Question />} />
+        <Route path="/question/:qid" element={<Poll />} />
+        <Route path="*" element={<NotFound404 />} />
       </Routes>
     </BrowserRouter>
   );

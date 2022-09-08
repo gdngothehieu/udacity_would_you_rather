@@ -6,7 +6,7 @@ import { _getQuestions, _getUsers, _saveQuestionAnswer } from "../_DATA";
 
 const Home = ({ ...props }) => {
   const [questionList, setQuestionList] = useState([]);
-
+  const [answerPoll, setAnswerPoll] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     if (!props.authenticatedUser?.id) {
@@ -20,21 +20,60 @@ const Home = ({ ...props }) => {
         for (let key in questions) {
           updateQuestionList.push(questions[key]);
         }
+        const poll = answerPoll;
+        updateQuestionList = updateQuestionList
+          .filter((updateQuestion) => {
+            return poll
+              ? updateQuestion.optionOne.votes.find(
+                  (vote) => vote === props.authenticatedUser.id
+                ) ||
+                  updateQuestion.optionTwo.votes.find(
+                    (vote) => vote === props.authenticatedUser.id
+                  )
+              : !updateQuestion.optionOne.votes.find(
+                  (vote) => vote === props.authenticatedUser.id
+                ) &&
+                  !updateQuestion.optionTwo.votes.find(
+                    (vote) => vote === props.authenticatedUser.id
+                  );
+          })
+          .sort((a, b) => {
+            return b.timestamp - a.timestamp;
+          });
         setQuestionList(updateQuestionList);
       };
       getQuestions();
     }
-  }, []);
+  }, [answerPoll]);
 
   return (
     <>
       {" "}
+      <div>
+        <em
+          style={{ cursor: "pointer", color: answerPoll ? "orange" : "black" }}
+          onClick={() => {
+            setAnswerPoll(true);
+          }}
+        >
+          Answer
+        </em>{" "}
+        |{" "}
+        <em
+          style={{ cursor: "pointer", color: !answerPoll ? "orange" : "black" }}
+          onClick={() => {
+            setAnswerPoll(false);
+          }}
+        >
+          Unanswer
+        </em>
+      </div>
       {questionList.length
         ? questionList.map((questionList, key) => {
             return (
               <div key={key}>
                 <div style={{ marginTop: "12px", fontWeight: "bold" }}>
-                  Would you rather? (hover and click to choose)
+                  Would you rather?
                 </div>
                 <Question
                   authenticatedUser={props.authenticatedUser}

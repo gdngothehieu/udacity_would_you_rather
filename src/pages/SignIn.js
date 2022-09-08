@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 const SignIn = ({ ...props }) => {
   const [options, setOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState({});
+
   const navigate = useNavigate();
   useEffect(() => {
     let usersList = [];
@@ -35,7 +36,7 @@ const SignIn = ({ ...props }) => {
       return;
     }
     props.dispatch(setAuthenticatedUser(updateOption.value));
-    navigate("/home");
+    navigate("/add");
   };
   return (
     <>
