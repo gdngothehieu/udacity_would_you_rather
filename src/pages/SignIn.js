@@ -32,11 +32,23 @@ const SignIn = ({ ...props }) => {
 
   const handleSignIn = () => {
     let updateOption = selectedOption;
+
+    const url = window.location.href;
+    const strs = url.split("/");
+    const id = strs.at(-1);
+    const questionUrl = strs.at(-2);
     if (!updateOption.value) {
       return;
     }
+    const query = url.split("?");
+    const queryUrl = query.at(-1);
+
     props.dispatch(setAuthenticatedUser(updateOption.value));
-    navigate("/add");
+    if (queryUrl !== "isPollSearch=true") {
+      navigate("/add");
+    } else {
+      navigate("/error-not-found");
+    }
   };
   return (
     <>

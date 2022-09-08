@@ -22,6 +22,7 @@ const Poll = (props) => {
       const url = window.location.href;
       const strs = url.split("/");
       const id = strs.at(-1);
+
       if (data[id]) {
         setQuestion(data[id]);
         setAuthor(author[data[id].author]);
@@ -30,7 +31,7 @@ const Poll = (props) => {
       }
     };
     if (!props.authenticatedUser.id) {
-      navigate("/login");
+      navigate("/login?isPollSearch=true");
     } else {
       getData();
     }
